@@ -4,7 +4,7 @@
 // Own database: SQLite-backed Durable Object GardenDB (catalogue rows + guest book), refreshed from her public /products.json
 // every 6 h by a DO alarm, seeded from the branch snapshot (catalogue.js). 0.4.1: her newer photos are hosted here as phone-sized webp
 // (R2 binding IMG, served at /garden-store/img/<key>-800.webp | -400.webp; map in images.js from images.json); the rest still load from her Shopify CDN.
-// Source: unclehowell/cedwyn branch section/garden-store. — Sion's Tab agent
+// Source: unclehowell/cedwyn-garden-store main. — Sion's Tab agent
 import SEED from './catalogue.js';
 import META from './meta.js';
 import IMGMAP from './images.js';
@@ -103,7 +103,7 @@ export class GardenDB {
   }
   // Her shop rate-limits some cloud addresses (429). Fallback: the branch snapshot that sync.py --commit keeps fresh from the box.
   async fromBranch() {
-    const r = await fetch('https://raw.githubusercontent.com/unclehowell/cedwyn/section/garden-store/catalogue.json?_cb=' + Date.now());
+    const r = await fetch('https://raw.githubusercontent.com/unclehowell/cedwyn-garden-store/main/catalogue.json?_cb=' + Date.now());
     if (!r.ok) throw new Error('branch snapshot answered ' + r.status);
     const j = await r.json();
     if (!j.products || !j.products.length) throw new Error('branch snapshot empty');
